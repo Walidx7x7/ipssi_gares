@@ -1,45 +1,50 @@
-***Analyse des Gares Ferroviaires avec un Arbre de Décision***
-Ce projet utilise un modèle d’arbre de décision pour analyser la nature des gares ferroviaires exploitées en France, en fonction de leurs coordonnées géographiques (latitude et longitude). Le modèle de machine learning, implémenté avec Scikit-Learn, est visualisé pour mieux comprendre la classification des gares.
+Projet d'Analyse des Gares Ferroviaires avec un Arbre de Décision
+Ce projet utilise un arbre de décision pour analyser et classer les gares ferroviaires françaises selon leur latitude, longitude et nature d'exploitation. Les étapes incluent le prétraitement des données, l'imputation des valeurs manquantes, la transformation des valeurs de NATURE en catégories, et l'entraînement d'un modèle de classification.
 
-**Structure du Projet**
-gares_ferroviaires_exploitees.csv : Le fichier de données CSV contenant les informations sur les gares ferroviaires.
-gares.py : Script Python principal pour charger les données, entraîner un arbre de décision, et visualiser le modèle.
-README.md : Ce fichier, expliquant le projet, les étapes d'installation, et l'exécution.
+Fichiers
+gares_ferroviaires_exploitees.csv : Fichier de données source contenant les informations des gares, y compris leur latitude, longitude, et nature.
+gares.py : Script Python principal pour le chargement des données, le prétraitement et l'entraînement du modèle de décision.
 Prérequis
-Pour exécuter ce projet, les éléments suivants sont nécessaires :
-
 Python 3.7+
-Packages Python :
+Bibliothèques Python :
 pandas
 scikit-learn
 matplotlib
-Installation des dépendances
-Utilisez pip pour installer les dépendances nécessaires executer sur votre terminal de commandes:
+Pour installer les bibliothèques requises, exécutez :
 
+bash
+Copier le code
 pip install pandas scikit-learn matplotlib
+Description des Étapes
+Chargement des Données : Le fichier CSV gares_ferroviaires_exploitees.csv est chargé avec l'encodage latin1, et les virgules dans les colonnes de latitude et longitude sont remplacées par des points pour assurer un formatage numérique correct.
 
-**Jeu de Données**
-Le fichier gares_ferroviaires_exploitees.csv contient les informations des gares, notamment :
+Préparation des Données :
 
-CODE_LIGNE : Code de la ligne de chemin de fer
-NOM : Nom de la gare
-NATURE : Nature de la gare (par exemple, desserte voyageurs, fret)
-LATITUDE (WGS84) et LONGITUDE (WGS84) : Coordonnées géographiques de la gare
-Remarque : Assurez-vous que ce fichier est placé dans le même répertoire que le script Python.
+Les colonnes LATITUDE (WGS84) et LONGITUDE (WGS84) sont converties en float après le remplacement des virgules.
+Les valeurs manquantes dans ces colonnes sont remplies par la moyenne (SimpleImputer avec la stratégie mean).
+Binning de la Colonne NATURE :
 
-Exécution du Script
-Pour exécuter le script, assurez-vous que gares.py et gares_ferroviaires_exploitees.csv se trouvent dans le même répertoire, puis lancez sur le terminal de commandes:
+La colonne NATURE (qui décrit le type de service de chaque gare) est transformée en catégories plus générales (ex : Low Activity, Moderate Activity, etc.).
+Cette étape est réalisée à l'aide d'un dictionnaire de mapping pour regrouper les types de gares en classes.
+Division des Données :
 
+Les données sont divisées en ensembles d'entraînement et de test avec une proportion de 80%-20%.
+Entraînement et Visualisation de l'Arbre de Décision :
+
+Un arbre de décision est entraîné sur les données d'entraînement. La profondeur de l'arbre est limitée à 3 pour éviter le sur-apprentissage et assurer une visualisation plus claire.
+L'arbre de décision est ensuite affiché avec les caractéristiques (LATITUDE et LONGITUDE) et les classes de NATURE binées.
+Utilisation
+Pour exécuter le script et visualiser l'arbre de décision, lancez :
+
+bash
+Copier le code
 python gares.py
+Ce script affiche un arbre de décision illustrant les relations géographiques entre les gares et leur nature d'exploitation.
 
-**Le script effectue les actions suivantes**
+Exemple de Sortie
+Le script produit une visualisation de l'arbre de décision où chaque nœud représente une décision basée sur les caractéristiques géographiques des gares et indique les catégories de NATURE.
 
-Chargement des données : Lit les données de gares.csv en utilisant pandas.
-Préparation des données : Sélectionne la latitude et la longitude comme caractéristiques (X) et la nature de la gare comme étiquette cible (y).
-Entraînement de l’arbre de décision : Utilise Scikit-Learn pour entraîner un modèle d’arbre de décision.
-Visualisation : Affiche l’arbre de décision avec matplotlib, montrant comment le modèle utilise les coordonnées géographiques pour classer les gares.
-Exemple d'Usage
-Le script affichera en sortie les premières lignes du jeu de données, les classes de NATURE présentes, ainsi que la visualisation de l’arbre de décision permettant d’interpréter le modèle.
-
-**Résultats Attendues**
-L'arbre de décision prédit la nature d'une gare en fonction de sa localisation géographique. Cette analyse permet d'identifier des tendances dans la distribution géographique des types de gares.
+Notes
+Les modifications incluent la gestion des données manquantes et la simplification des catégories de NATURE en classes binées pour améliorer la lisibilité de l'arbre.
+La profondeur de l'arbre a été réduite pour éviter le sur-ajustement et faciliter l'interprétation visuelle.
+Ce README vous offre une vue d'ensemble des étapes du projet, des méthodes de prétraitement et des paramètres utilisés dans le modèle d'arbre de décision.
